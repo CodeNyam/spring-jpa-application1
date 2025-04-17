@@ -1,0 +1,49 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.4.4'
+	id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'jpabook'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+//	implementation 'org.springframework.boot:spring-boot-starter-devtools'
+	implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.10.0'
+	compileOnly 'org.projectlombok:lombok'
+	runtimeOnly 'com.h2database:h2'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+// Note. 템플릿 엔진과 관련된 코드를 수정할 때
+// 앞선 hello.html 파일에서 p태그 내부와 바깥 내용을 바꿀 때
+// 기존) 안녕하세요. + ${data} -> 안녕! + ${data}
+// 그냥 바꾸면, 해당 파일 내용이 적용되지 않는다. p태그 내부와 외부 내용을 같이 변경해야해서 복잡하다.
+// 이때 spring-boot-devtools 라이브러리를 추가하자!
+// 해당 html파일만 리컴파일하면 서버 재시작 없이 View파일을 수정할 수 있다.
