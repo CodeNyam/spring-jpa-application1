@@ -25,4 +25,31 @@ public class OrderItems {
     private int orderPrice; // 주문 가격 -> 시간마다 바뀔수도 있음
     private int count; // 주문 수량
 
+    // == 생성 메서드== //
+    public static OrderItems createOrderItem(Item item, int orderPrice, int count) {
+        OrderItems orderItem = new OrderItems();
+        orderItem.setItem(item);
+        orderItem.setOrderPrice(orderPrice);
+        orderItem.setCount(count);
+
+        item.removeStock(count);
+        return orderItem;
+    }
+
+    // ==비즈니스 로직== //
+    /**
+     * 주문 취소
+     */
+    public void cancel() {
+        getItem().addStock(count);
+    }
+
+    // ==조회 로직== //
+    /** 주문 상품 전체 조회
+     *
+     * @return
+     */
+    public int getTotalPrice() {
+        return getOrderPrice() * getCount();
+    }
 }
