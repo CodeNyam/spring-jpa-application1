@@ -19,3 +19,8 @@ spring:
       # 로그를 통해 sql 출력
       org.hibernate.SQL: debug
       org.hibernate.type: trace
+
+
+  thymeleaf:
+    prefix : classpath:/templates/
+    suffix: .html
